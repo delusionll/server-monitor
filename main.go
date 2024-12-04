@@ -1,7 +1,20 @@
 package main
 
-import "fmt"
+import (
+	"server-monitor/checker"
+	"server-monitor/logger"
+	"time"
+)
 
 func main() {
-	fmt.Println("Hello World!")
+	servers := []string{"https://example.com", "https://google.com"}
+	log := logger.SetupLogger()
+
+	for {
+		results := checker.CheckServers(servers)
+		for _, result := range results {
+			logger.LogResult(log, result)
+		}
+		time.Sleep(10 * time.Second)
+	}
 }
